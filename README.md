@@ -31,14 +31,40 @@ txs = [
 	{"id": "789"}
 ]
 ```
+### systemd
+`capture.py` is started on boot with systemd. If you don't have systemd or otherwise have objections towards it then you could either use the screen setup below, but if you're technical enough to not like systemd then I'm guessing you won't like screen either, in which case I'm sure you can work it out by yourself :stuck_out_tongue_winking_eye:
 
-Open `/etc/rc.local` (you'll need root access) and add
+Firstly, copy `efergy-sdr.service` to the proper location. Something like this:
+```bash
+sudo cp /home/pi/efergy-sdr/efergy-sdr.service /etc/systemd/system/
+```
+(substituting the path to this repo if necessary)
+
+Then set permissions:
+```bash
+sudo chown root:root /etc/systemd/system/efergy-sdr.service
+sudo chmod 644 /etc/systemd/system/efergy-sdr.service
+```
+
+If this repo is not cloned at `/home/pi/efergy-sdr/` then you'll need to edit `/etc/systemd/system/efergy-sdr.service` and just change `ExecStart` to point to `capture.py`
+
+The service can then be started up as follows:
+```bash
+sudo systemctl daemon-reload
+sudo systemctl enable efergy-sdr
+sudo systemctl start efergy-sdr
+```
+
+### screen
+First install screen with `sudo apt install screen`
+
+Then open `/etc/rc.local` (you'll need root access) and add
 ```
 screen -h 1024 -dmS "efergy-sdr" /home/pi/efergy-sdr/capture.py
 ```
 before the line containing `exit 0`. If you're not running this on a Pi, then you'll need to substitute in your username.
 
-This will start `capture.py` at every boot in a screen session. (yes I know this isn't ideal, but it's very cross-platform and easy :) )
+This will start `capture.py` at every boot in a screen session.
 
 ---
 Open `~/efergy-sdr/post.py` and specify the ID(s) just like before. You'll also need to add the AC voltage the transmitter is monitoring. You can also add PVOutput and/or Phant (ie. [data.sparkfun.com](https://data.sparkfun.com)) keys to the transmitter entries for data to be logged. (If you don't add any keys, then `post.py` will simply clear the `ID_amplog` files and nothing else, which is pretty boring :( )

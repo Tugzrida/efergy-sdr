@@ -2,7 +2,7 @@
 printf "\e[92mInstalling efergy-sdr...\e[39m\n"
 printf "\e[92mInstalling dependencies...\e[39m\n"
 sudo apt-get -y update
-sudo apt-get -y install libtool libusb-1.0.0-dev librtlsdr-dev rtl-sdr screen python-requests git cmake
+sudo apt-get -y install libtool libusb-1.0.0-dev librtlsdr-dev rtl-sdr python-requests git cmake
 printf "\e[92mCloning rtl_433...\e[39m\n"
 git clone https://github.com/merbanan/rtl_433.git /tmp/rtl_433/
 printf "\e[92mBuilding rtl_433...\e[39m\n"

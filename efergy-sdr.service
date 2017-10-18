@@ -1,0 +1,11 @@
+[Unit]
+Description=efergy-sdr
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/home/pi/efergy-sdr/capture.py
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
