@@ -11,7 +11,7 @@ cd /tmp/rtl_433/build/
 cmake ../
 make
 sudo make install
-cd /home/pi/
+cd ~
 rm -r /tmp/rtl_433/
 echo "# This system has librtlsdr0 installed in order to
 # use digital video broadcast receivers as generic
