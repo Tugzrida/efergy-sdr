@@ -26,9 +26,9 @@ Open `~/efergy-sdr/capture.py` and edit the transmitter list at the beginning of
 You can specify multiple transmitters as follows:
 ```python
 txs = [
-	{"id": "123"},
-	...
-	{"id": "789"}
+    {"id": "123"},
+    ...
+    {"id": "789"}
 ]
 ```
 ---
@@ -75,9 +75,9 @@ Open `~/efergy-sdr/post.py` and specify the ID(s) just like before. You'll also 
 
 ```python
 txs = [
-	{"id": "123", "voltage": 240, "pvo_apikey": "super_secret_numbers", "pvo_sysid": "12345", "pvo_generation": False, "phant_public": "itsasecret", "phant_private": "shhhhhh"},
-	...
-	{"id": "456", "voltage": 120, "pvo_apikey": "numbers_numbers_numbers", "pvo_sysid": "67890", "pvo_generation": True, "phant_public": "canyoukeepit", "phant_private": "secretsauce"}
+    {"id": "123", "voltage": 240, "pvo_apikey": "super_secret_numbers", "pvo_sysid": "12345", "pvo_generation": False, "phant_public": "itsasecret", "phant_private": "shhhhhh"},
+    ...
+    {"id": "456", "voltage": 120, "pvo_apikey": "numbers_numbers_numbers", "pvo_sysid": "67890", "pvo_generation": True, "phant_public": "canyoukeepit", "phant_private": "secretsauce"}
 ]
 ```
 
