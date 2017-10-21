@@ -15,7 +15,7 @@ Designed and tested for Raspberry Pi, however should be very portable, rtl_433 i
 ```bash
 curl -fsSL https://github.com/Tugzrida/efergy-sdr/raw/master/install.sh | bash
 ```
-(as always ***please*** read the contents of one-liner install scripts before running them-they have full access to your system)
+(as always ***please*** read the contents of one-liner install scripts before running them as ***they have full access to your entire system***)
 
 ## Setup
 Connect an RTL-SDR and run `rtl_433 -R 36 -f 433485000`. Take note of the ID reported for the efergy transmitter(s) you wish to use. Tapping the button on the front of the efergy unit to start learning mode will show `Learning: YES` for a few minutes for further identification if there are multiple units within range.
