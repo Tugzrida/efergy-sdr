@@ -13,7 +13,7 @@ Designed and tested for Raspberry Pi, however should be very portable, rtl_433 i
 ---
 ## Install
 ```bash
-curl -fsSL https://github.com/Tugzrida/efergy-sdr/raw/master/install.sh | sudo bash
+curl -fsSL https://github.com/Tugzrida/efergy-sdr/raw/master/install.sh | bash
 ```
 (as always ***please*** read the contents of one-liner install scripts before running them-they have full access to your system)
 
@@ -21,7 +21,7 @@ curl -fsSL https://github.com/Tugzrida/efergy-sdr/raw/master/install.sh | sudo b
 Connect an RTL-SDR and run `rtl_433 -R 36 -f 433485000`. Take note of the ID reported for the efergy transmitter(s) you wish to use. Tapping the button on the front of the efergy unit to start learning mode will show `Learning: YES` for a few minutes for further identification if there are multiple units within range.
 
 ---
-Open `~/efergy-sdr/capture.py` and edit the transmitters list at the beginning of the file to specify the ID(s) from the previous step.
+Open `~/efergy-sdr/capture.py` and edit the transmitter list at the beginning of the file to specify the ID(s) from the previous step.
 
 You can specify multiple transmitters as follows:
 ```python
@@ -31,14 +31,15 @@ txs = [
 	{"id": "789"}
 ]
 ```
+---
 ### systemd
-`capture.py` is started on boot with systemd. If you don't have systemd or otherwise have objections towards it then you could either use the screen setup below, but if you're technical enough to not like systemd then I'm guessing you won't like screen either, in which case I'm sure you can work it out by yourself :stuck_out_tongue_winking_eye:
+`capture.py` can be started on boot with systemd. If you don't have systemd or otherwise have objections towards it then you could either use the screen setup below, but if you're technical enough to not like systemd then I'm guessing you won't like screen either, in which case I'm sure you can work it out by yourself :stuck_out_tongue_winking_eye:
 
 Firstly, copy `efergy-sdr.service` to the proper location. Something like this:
 ```bash
 sudo cp /home/pi/efergy-sdr/efergy-sdr.service /etc/systemd/system/
 ```
-(substituting the path to this repo if necessary)
+(substituting your username if you're not using a Pi)
 
 Then set permissions:
 ```bash
@@ -46,7 +47,7 @@ sudo chown root:root /etc/systemd/system/efergy-sdr.service
 sudo chmod 644 /etc/systemd/system/efergy-sdr.service
 ```
 
-If this repo is not cloned at `/home/pi/efergy-sdr/` then you'll need to edit `/etc/systemd/system/efergy-sdr.service` and just change `ExecStart` to point to `capture.py`
+If you're not using a Pi then you'll need to edit `/etc/systemd/system/efergy-sdr.service`(with root permissions) and just change the path of `ExecStart` to point to `capture.py`
 
 The service can then be started up as follows:
 ```bash
@@ -56,6 +57,9 @@ sudo systemctl start efergy-sdr
 ```
 
 ### screen
+
+**Doing things this way is not great as it won't restart on crash. Use systemd or another service manager if at all possible.**
+
 First install screen with `sudo apt install screen`
 
 Then open `/etc/rc.local` (you'll need root access) and add

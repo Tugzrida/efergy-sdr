@@ -21,6 +21,6 @@ blacklist e4000
 blacklist rtl2832" | sudo tee /etc/modprobe.d/rtl-sdr-blacklist.conf
 
 printf "\e[92mCloning efergy-sdr...\e[39m\n"
-git clone https://github.com/Tugzrida/efergy-sdr.git /home/pi/efergy-sdr/
-chmod +x /home/pi/efergy-sdr/capture.py /home/pi/efergy-sdr/post.py
+git clone https://github.com/Tugzrida/efergy-sdr.git ~/efergy-sdr/
+chmod +x ~/efergy-sdr/capture.py ~/efergy-sdr/post.py
 printf "\e[92mDone! Now follow the setup info at https://github.com/Tugzrida/efergy-sdr#setup\e[39m\n"
