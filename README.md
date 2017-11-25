@@ -10,7 +10,16 @@ After completing this setup, here's how everything will work:
 
 Designed and tested for Raspberry Pi, however should be very portable, rtl_433 is C and efergy-sdr is Python.
 
----
+#### A note on phant
+Sparkfun has announced that [data.sparkfun.com](https://data.sparkfun.com/) will be closed down at the end of 2017. You can still spin up your own phant server following the directions at [github.com/sparkfun/phant](https://github.com/sparkfun/phant) if you like, or you can just use efergy-sdr to push to PVOutput, which provides ample graphs and analysis for nearly all applications.
+
+* [Install](#install)
+* [Setup](#setup)
+  * [capture.py](#capturepy)
+  * [systemd](#systemd)
+  * [screen](#screen)
+  * [post.py](#postpy)
+
 ## Install
 ```bash
 curl -fsSL https://github.com/Tugzrida/efergy-sdr/raw/master/install.sh | bash
@@ -18,9 +27,10 @@ curl -fsSL https://github.com/Tugzrida/efergy-sdr/raw/master/install.sh | bash
 (as always ***please*** read the contents of one-liner install scripts before running them as ***they have full access to your entire system***)
 
 ## Setup
-Connect an RTL-SDR and run `rtl_433 -R 36 -f 433485000`. Take note of the ID reported for the efergy transmitter(s) you wish to use. Tapping the button on the front of the efergy unit to start learning mode will output `Learning: YES` with the transmitter's ID and other details for a few minutes for further identification if there are multiple units within range.
+Connect an RTL-SDR and run `rtl_433 -R 36 -f 433485000`. Take note of the ID reported for the efergy transmitter(s) you wish to use. Pressing the button on the front of the efergy unit briefly to start learning mode will output `Learning: YES` with the transmitter's ID and other details for a few minutes for further identification if there are multiple units within range.
 
 ---
+### capture.py
 Open `~/efergy-sdr/capture.py` and edit the transmitter list at the beginning of the file to specify the ID(s) from the previous step.
 
 You can specify multiple transmitters as follows:
@@ -71,6 +81,7 @@ before the line containing `exit 0`. If you're not running this on a Pi, then yo
 This will start `capture.py` at every boot in a screen session.
 
 ---
+### post.py
 Open `~/efergy-sdr/post.py` and specify the ID(s) just like before. You'll also need to add the AC voltage the transmitter is monitoring. You can also add PVOutput and/or Phant (ie. [data.sparkfun.com](https://data.sparkfun.com)) keys to the transmitter entries for data to be logged. (If you don't add any keys, then `post.py` will simply clear the `ID_amplog` files and nothing else, which is pretty boring :( )
 
 ```python
@@ -92,5 +103,3 @@ Run `crontab -e` and add the following line to the end:
 Once again, if you're not running this on a Pi, then you'll need to substitute in your username.
 
 This will run `post.py` every 5 minutes.
-
----
