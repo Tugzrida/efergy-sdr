@@ -47,7 +47,7 @@ for tx in txs:
         print("Error posting tx {} to PVOutput".format(tx["id"]))
     
     try:
-        get("http://data.sparkfun.com/input/{}?private_key={}&average={}&max={}&min={}".format(tx["phant_public"], tx["phant_private"], average, maximum, minimum))
+        get("http://YOUR_PHANT_SERVER/input/{}?private_key={}&average={}&max={}&min={}".format(tx["phant_public"], tx["phant_private"], average, maximum, minimum))
         print("Posted tx {} to Phant".format(tx["id"]))
     except:
         print("Error posting tx {} to Phant".format(tx["id"]))
