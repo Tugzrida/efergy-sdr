@@ -6,12 +6,12 @@ After completing this setup, here's how everything will work:
 
 * `capture.py` is started at every boot and in turn starts `rtl_433`
 * The current value(Amps) of any messages recieved by `rtl_433` matching the specified transmitter ID(s) will be saved in a file named `ID_amplog`.
-* Every 5 minutes(or however long you choose), `post.py` will calculate the average, maximum, and minimum values for each of the `ID_amplog` files, multiply them by the specified voltage in order to get power in Watts, and send the average to PVOutput and/or the average, max and min to a Phant server. `post.py` then clears the amp logs.
+* Every 5 minutes, `post.py` will calculate the average, maximum, and minimum values for each of the `ID_amplog` files, multiply them by the specified voltage in order to get power in Watts, and send the average to PVOutput and/or the average, max and min to a Phant server. `post.py` then clears the amp logs.
 
 Efergy-SDR was designed and tested for Raspberry Pi, however it should be very portable - rtl_433 is C and Efergy-SDR is Python.
 
 #### A note on Phant
-Sparkfun shut down their implementation of Phant (data.sparkfun.com) and ceased development of the Phant platform at the end of 2017. You can still spin up your own Phant server following the directions at [github.com/sparkfun/phant](https://github.com/sparkfun/phant) if you like, however you may need to tweak some things around to get it to run reliably. Or you can just use efergy-sdr to push to PVOutput, which provides ample graphs and analysis for virtually all applications.
+Sparkfun shut down their implementation of Phant (data.sparkfun.com) and ceased development of the Phant platform at the end of 2017. You can still spin up your own Phant server following the directions at [github.com/sparkfun/phant](https://github.com/sparkfun/phant) if you like, however you may need to tweak some things around to get it to run reliably (have a look at the archived issues for some pointers). Or you can just use efergy-sdr to push to PVOutput, which provides ample graphs and analysis for virtually all applications.
 
 If you do decide to use Phant, you will need to create a stream with the fields `average`, `min` and `max`.
 
@@ -39,12 +39,18 @@ Open `~/efergy-sdr/capture.py` and edit the transmitter list at the beginning of
 You can specify multiple transmitters as follows:
 ```python
 txs = [
-    {"id": "123"},
-    {"id": "456"},
+    {"id": "123", "name": "House usage"},
+    {"id": "456", "name": "1.68kW solar"},
     ...
-    {"id": "789"}
+    {"id": "789", "name": "12.16kW solar"}
 ]
 ```
+
+The `name` field is only used for [IFTTT](https://ifttt.com) low battery notificaions, which can be optionally setup as follows:
+
+1. Create an applet on IFTTT with a webhook called `notify` as "this" and a notification with body `{{Value1}}` as "that".
+2. Take your webhooks key from [https://ifttt.com/maker_webhooks](https://ifttt.com/maker_webhooks)`> Documentation` and insert it into `capture.py` in place of `YOUR_KEY` near the end of the script.
+
 ---
 ### Auto start
 #### systemd

@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 # efergy-sdr: post.py: uploads energy data stored by capture.py to PVOutput and/or Phant
-# Copyright (C) 2017 Tugzrida (github.com/Tugzrida)
+# Copyright (C) 2018 Tugzrida (github.com/Tugzrida)
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published
@@ -20,7 +20,7 @@ import os, time
 from requests import get, post
 
 txs = [
-    {"id": "123", "voltage": 240, "pvo_apikey": "YOUR_API_KEY", "pvo_sysid": "YOUR_SYSID", "pvo_generation": False, "phant_public": "YOUR_PUB_KEY", "phant_private": "YOUR_PRIV_KEY"}
+    {"id": "123", "voltage": 240, "pvo_apikey": "YOUR_API_KEY", "pvo_sysid": "YOUR_SYSID", "generation": False, "phant_public": "YOUR_PUB_KEY", "phant_private": "YOUR_PRIV_KEY"}
 ]
 
 for tx in txs:
@@ -33,8 +33,8 @@ for tx in txs:
     minimum = min(amplog) * tx["voltage"]
     average = round((total / lines) * tx["voltage"], 2)
     
-    if tx["pvo_generation"]:
-        if average < 20:
+    if tx["generation"]:
+        if maximum < 20:
             maximum = minimum = average = 0
         pvodata = {'c1': '1', 'data': "{},,{}".format(time.strftime("%Y%m%d,%H:%M"), average)}
     else:
