@@ -45,13 +45,9 @@ txs = [
     {"id": "789"}
 ]
 ```
-<<<<<<< Updated upstream
 ---
-### systemd
-=======
 ### Auto start
 #### systemd
->>>>>>> Stashed changes
 `capture.py` can be started on boot with systemd. If you don't have systemd then you could use the [screen setup](#screen) below, but it's not ideal.
 
 Firstly, copy `efergy-sdr.service` to the proper location. Something like this:
