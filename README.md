@@ -13,7 +13,7 @@ Designed and tested for Raspberry Pi, however should be very portable, rtl_433 i
 #### A note on Phant
 Sparkfun shut down their implementation of Phant (data.sparkfun.com) and ceased development of the Phant platform at the end of 2017. You can still spin up your own Phant server following the directions at [github.com/sparkfun/phant](https://github.com/sparkfun/phant) if you like, however you may need to tweak some things around to get it to run reliably. Or you can just use efergy-sdr to push to PVOutput, which provides ample graphs and analysis for virtually all applications.
 
-If you do decide to use phant, you will need to create a stream with the fields `average`, `min` and `max`.
+If you do decide to use Phant, you will need to create a stream with the fields `average`, `min` and `max`.
 
 * [Install](#install)
 * [Setup](#setup)
