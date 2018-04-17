@@ -18,8 +18,9 @@ If you do decide to use Phant, you will need to create a stream with the fields 
 * [Install](#install)
 * [Setup](#setup)
   * [capture.py](#capturepy)
-  * [systemd](#systemd)
-  * [screen](#screen)
+  * [Auto start](#auto-start)
+    * [systemd](#systemd)
+    * [screen](#screen)
   * [post.py](#postpy)
 
 ## Install
@@ -44,8 +45,13 @@ txs = [
     {"id": "789"}
 ]
 ```
+<<<<<<< Updated upstream
 ---
 ### systemd
+=======
+### Auto start
+#### systemd
+>>>>>>> Stashed changes
 `capture.py` can be started on boot with systemd. If you don't have systemd then you could use the [screen setup](#screen) below, but it's not ideal.
 
 Firstly, copy `efergy-sdr.service` to the proper location. Something like this:
@@ -72,7 +78,7 @@ And finally started with:
 sudo systemctl start efergy-sdr
 ```
 
-### screen
+#### screen
 
 **Doing things this way is not great as it won't restart on crash. Use systemd or another service manager if at all possible.**
 
