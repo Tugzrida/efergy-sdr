@@ -25,7 +25,8 @@ If you do decide to use Phant, you will need to create a stream with the fields 
 
 ## Install
 ```bash
-curl -fsSL https://github.com/Tugzrida/efergy-sdr/raw/master/install.sh | bash
+curl -fsSL https://github.com/Tugzrida/efergy-sdr/raw/master/install.sh > /tmp/efergy-sdr-install;
+echo "9cc1b9a06a2362e2a14deb93f96d931a8a2d28eb  /tmp/efergy-sdr-install" | sha1sum -c - && bash /tmp/efergy-sdr-install;
 ```
 (as always ***please*** read the contents of one-liner install scripts before running them as ***they have full access to your entire system***)
 
@@ -38,12 +39,12 @@ Open `~/efergy-sdr/capture.py` and edit the transmitter list at the beginning of
 
 You can specify multiple transmitters as follows:
 ```python
-txs = [
-    {"id": "123", "name": "House usage"},
-    {"id": "456", "name": "1.68kW solar"},
+txs = {
+    "123": {"name": "House usage"},
+    "456": {"name": "1.68kW solar"},
     ...
-    {"id": "789", "name": "12.16kW solar"}
-]
+    "789": {"name": "12.16kW solar"}
+}
 ```
 
 The `name` field is only used for [IFTTT](https://ifttt.com) low battery notificaions, which can be optionally setup as follows:
@@ -96,7 +97,7 @@ This will start `capture.py` at every boot in a screen session.
 
 ---
 ### post.py
-Open `~/efergy-sdr/post.py` and specify the ID(s) just like before. You'll also need to add the AC voltage the transmitter is monitoring. You can also add PVOutput and/or Phant keys to the transmitter entries for data to be logged. (If you don't add any keys, then `post.py` will simply clear the `ID_amplog` files and nothing else, which is pretty boring :( )
+Open `~/efergy-sdr/post.py` and specify the ID(s) similar to before. You'll also need to add the AC voltage the transmitter is monitoring. You can also add PVOutput and/or Phant keys to the transmitter entries for data to be logged. (If you don't add any keys, then `post.py` will simply clear the `ID_amplog` files and nothing else, which is pretty boring :( )
 
 ```python
 txs = [
@@ -107,7 +108,7 @@ txs = [
 ]
 ```
 
-**It's important to set `"generation"` appropriately.** Set to `False`, the concerned efergy transmitter will log to **usage** on PVOutput. Setting to `True` will log data from the transmitter as **generation**.
+**It's important to set `"generation"` correctly.** Set to `False`, the concerned efergy transmitter will log to **usage** on PVOutput. Setting to `True` will log data from the transmitter as **generation**.
 
 Transmitters with `"generation"` set to `True` will also have their outputs rounded down to 0 when their maximum value over 5 minutes is less than 20 Watts. This is to prevent the logging of night time back-draw of inverters. This value will most likely need tweaking as per your inverter and setup.
 
