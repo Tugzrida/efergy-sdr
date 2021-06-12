@@ -38,7 +38,7 @@ for line in iter(rtl433.stdout.readline, b''):
         if tx in txs:
             with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), '{}_amplog'.format(tx)), "a") as amplog:
                 amplog.write("{}\n".format(str(rcvdJson["current"])))
-            if rcvdJson["battery"] == "LOW":
+            if rcvdJson["battery_ok"] != 1:
                 print("{} transmitter battery is low".format(txs[tx]["name"]))
                 if txs[tx]["batteryLowSent"] == False:
                     try:
