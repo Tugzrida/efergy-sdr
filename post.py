@@ -29,6 +29,7 @@ for tx in txs:
     with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), '{}_amplog'.format(tx["id"])), 'w'): pass
 
     lines = len(ampdata)
+    if lines == 0: continue
     total = sum(ampdata)
     maximum = max(ampdata) * tx["voltage"]
     minimum = min(ampdata) * tx["voltage"]
@@ -37,12 +38,13 @@ for tx in txs:
     if tx["generation"]:
         if maximum < 20:
             maximum = minimum = average = 0
-        pvodata = {'c1': '1', 'data': "{},,{}".format(time.strftime("%Y%m%d,%H:%M"), average)}
+            continue
+        pvodata = {'d': time.strftime("%Y%m%d"), 't': time.strftime("%H:%M"), 'v2': average}
     else:
-        pvodata = {'c1': '1', 'data': "{},,,,{}".format(time.strftime("%Y%m%d,%H:%M"), average)}
+        pvodata = {'d': time.strftime("%Y%m%d"), 't': time.strftime("%H:%M"), 'v4': average}
 
     try:
-        post("https://pvoutput.org/service/r2/addbatchstatus.jsp", data=pvodata, headers={'X-Pvoutput-Apikey': tx["pvo_apikey"], 'X-Pvoutput-SystemId': tx["pvo_sysid"]})
+        post("https://pvoutput.org/service/r2/addstatus.jsp", data=pvodata, headers={'X-Pvoutput-Apikey': tx["pvo_apikey"], 'X-Pvoutput-SystemId': tx["pvo_sysid"]})
         print("Posted tx {} to PVOutput".format(tx["id"]))
     except:
         print("Error posting tx {} to PVOutput".format(tx["id"]))
